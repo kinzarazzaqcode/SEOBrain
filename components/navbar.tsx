@@ -2,9 +2,16 @@
 
 import { useState, useEffect } from "react"
 import Link from "next/link"
-import { motion, useScroll, useTransform } from "framer-motion"
+import { motion, useScroll } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { Menu, X, Sparkles } from "lucide-react"
+
+const navLinks = [
+  { label: "Features", href: "/#features" },
+  { label: "Tools", href: "/tools" },
+  { label: "Pricing", href: "/pricing" },
+  { label: "Docs", href: "/docs" },
+]
 
 export function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
@@ -17,9 +24,6 @@ export function Navbar() {
     })
     return () => unsubscribe()
   }, [scrollY])
-
-  const backgroundOpacity = useTransform(scrollY, [0, 100], [0.8, 0.95])
-  const backdropBlur = useTransform(scrollY, [0, 100], [8, 16])
 
   return (
     <motion.nav 
@@ -44,24 +48,21 @@ export function Navbar() {
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-8">
-            <a href="#features" className="text-sm font-medium text-slate-600 hover:text-slate-900 transition-colors">
-              Features
-            </a>
-            <a href="#tools" className="text-sm font-medium text-slate-600 hover:text-slate-900 transition-colors">
-              Tools
-            </a>
-            <a href="#pricing" className="text-sm font-medium text-slate-600 hover:text-slate-900 transition-colors">
-              Pricing
-            </a>
-            <a href="#" className="text-sm font-medium text-slate-600 hover:text-slate-900 transition-colors">
-              Docs
-            </a>
+            {navLinks.map((link) => (
+              <Link 
+                key={link.label}
+                href={link.href} 
+                className="text-sm font-medium text-slate-600 hover:text-slate-900 transition-colors"
+              >
+                {link.label}
+              </Link>
+            ))}
           </div>
 
           {/* Desktop Buttons */}
           <div className="hidden md:flex items-center gap-3">
             <Button variant="ghost" className="text-slate-600" asChild>
-              <Link href="/signin">Sign in</Link>
+              <Link href="/signin">Sign In</Link>
             </Button>
             <Button className="bg-gradient-to-r from-violet-600 to-blue-500 hover:from-violet-700 hover:to-blue-600 text-white border-0" asChild>
               <Link href="/signup">Get Started Free</Link>
@@ -91,21 +92,19 @@ export function Navbar() {
           exit={{ opacity: 0, height: 0 }}
         >
           <div className="px-4 py-4 space-y-3">
-            <a href="#features" className="block text-sm font-medium text-slate-600 hover:text-slate-900">
-              Features
-            </a>
-            <a href="#tools" className="block text-sm font-medium text-slate-600 hover:text-slate-900">
-              Tools
-            </a>
-            <a href="#pricing" className="block text-sm font-medium text-slate-600 hover:text-slate-900">
-              Pricing
-            </a>
-            <a href="#" className="block text-sm font-medium text-slate-600 hover:text-slate-900">
-              Docs
-            </a>
+            {navLinks.map((link) => (
+              <Link 
+                key={link.label}
+                href={link.href} 
+                className="block text-sm font-medium text-slate-600 hover:text-slate-900"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                {link.label}
+              </Link>
+            ))}
             <div className="pt-3 flex flex-col gap-2">
               <Button variant="outline" className="w-full" asChild>
-                <Link href="/signin">Sign in</Link>
+                <Link href="/signin">Sign In</Link>
               </Button>
               <Button className="w-full bg-gradient-to-r from-violet-600 to-blue-500 text-white border-0" asChild>
                 <Link href="/signup">Get Started Free</Link>
