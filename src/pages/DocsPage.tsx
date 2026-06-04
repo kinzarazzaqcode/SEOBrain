@@ -1,7 +1,5 @@
-"use client"
-
 import { useState } from "react"
-import Link from "next/link"
+import { Link } from "react-router-dom"
 import { motion } from "framer-motion"
 import { Navbar } from "@/components/navbar"
 import { Footer } from "@/components/footer"
@@ -14,7 +12,6 @@ import {
   Settings,
   Zap,
   Code,
-  Key,
   Shield,
   Users,
   CreditCard,
@@ -214,7 +211,7 @@ export default function DocsPage() {
               >
                 {/* Breadcrumb */}
                 <nav className="flex items-center gap-2 text-sm text-slate-500 mb-6">
-                  <Link href="/docs" className="hover:text-slate-700">
+                  <Link to="/docs" className="hover:text-slate-700">
                     Docs
                   </Link>
                   <ChevronRight className="w-4 h-4" />
@@ -309,72 +306,8 @@ export default function DocsPage() {
                     </>
                   )}
 
-                  {activeSection === "seo-agent" && (
-                    <>
-                      <h2>Overview</h2>
-                      <p>
-                        The SEO Agent is your automated assistant for keyword research, rank tracking, and competitive analysis. It works 24/7 to discover new opportunities and alert you to important changes.
-                      </p>
-
-                      <h2>Features</h2>
-                      <ul>
-                        <li><strong>Automatic Keyword Discovery</strong> - Finds new keyword opportunities based on your niche</li>
-                        <li><strong>Daily Rank Tracking</strong> - Monitors your positions across all major search engines</li>
-                        <li><strong>Competitor Monitoring</strong> - Tracks competitor rankings and content changes</li>
-                        <li><strong>Opportunity Alerts</strong> - Notifies you of quick wins and ranking drops</li>
-                      </ul>
-
-                      <h2>How to Use</h2>
-                      <p>
-                        Navigate to the SEO Agent section in your dashboard. The agent is automatically activated when you create a project. You can customize its behavior in the settings.
-                      </p>
-
-                      <h2>Best Practices</h2>
-                      <ul>
-                        <li>Review agent suggestions weekly</li>
-                        <li>Prioritize keywords with high opportunity scores</li>
-                        <li>Set up alerts for your top 10 keywords</li>
-                      </ul>
-                    </>
-                  )}
-
-                  {activeSection === "api-auth" && (
-                    <>
-                      <h2>Authentication</h2>
-                      <p>
-                        The SeoBrain API uses API keys to authenticate requests. You can manage your API keys in your account settings.
-                      </p>
-
-                      <h2>Getting Your API Key</h2>
-                      <ol>
-                        <li>Go to Settings  API Keys in your dashboard</li>
-                        <li>Click &quot;Generate New Key&quot;</li>
-                        <li>Give your key a descriptive name</li>
-                        <li>Copy and securely store your key</li>
-                      </ol>
-
-                      <h2>Making Authenticated Requests</h2>
-                      <p>Include your API key in the Authorization header:</p>
-                      
-                      <div className="not-prose">
-                        <pre className="bg-slate-900 text-slate-100 p-4 rounded-lg overflow-x-auto text-sm">
-                          <code>{`curl -X GET "https://api.seobrain.ai/v1/projects" \\
-  -H "Authorization: Bearer YOUR_API_KEY"`}</code>
-                        </pre>
-                      </div>
-
-                      <h2>Security Best Practices</h2>
-                      <ul>
-                        <li>Never expose your API key in client-side code</li>
-                        <li>Rotate keys periodically</li>
-                        <li>Use environment variables to store keys</li>
-                        <li>Set up key restrictions when possible</li>
-                      </ul>
-                    </>
-                  )}
-
                   {/* Default content for other sections */}
-                  {!["introduction", "quick-start", "seo-agent", "api-auth"].includes(activeSection) && (
+                  {!["introduction", "quick-start"].includes(activeSection) && (
                     <>
                       <p>
                         This documentation page is coming soon. In the meantime, check out our other guides or reach out to support if you have questions.

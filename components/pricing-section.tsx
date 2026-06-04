@@ -1,7 +1,7 @@
 "use client"
 
 import { useRef } from "react"
-import Link from "next/link"
+import { Link } from "react-router-dom"
 import { motion, useInView } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { Check } from "lucide-react"
@@ -179,7 +179,7 @@ export function PricingSection() {
                 }`}
                 asChild
               >
-                <Link href="/signup">{plan.cta}</Link>
+                <Link to="/signup">{plan.cta}</Link>
               </Button>
             </motion.div>
           ))}

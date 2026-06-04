@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useRef, useState } from "react"
-import Link from "next/link"
+import { Link } from "react-router-dom"
 import { motion, useInView } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { ArrowRight, Play } from "lucide-react"
@@ -174,7 +174,7 @@ export function HeroSection() {
               className="bg-gradient-to-r from-violet-600 to-blue-500 hover:from-violet-700 hover:to-blue-600 text-white border-0 px-8 h-12 text-base shadow-lg shadow-violet-500/25"
               asChild
             >
-              <Link href="/signup">
+              <Link to="/signup">
                 Start Free Trial
                 <ArrowRight className="w-4 h-4 ml-2" />
               </Link>

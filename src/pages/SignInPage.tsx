@@ -1,7 +1,5 @@
-"use client"
-
 import { useState } from "react"
-import Link from "next/link"
+import { Link } from "react-router-dom"
 import { motion } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -24,7 +22,7 @@ export default function SignInPage() {
         >
           {/* Back Link */}
           <Link 
-            href="/" 
+            to="/" 
             className="inline-flex items-center gap-2 text-sm text-slate-600 hover:text-slate-900 transition-colors mb-8"
           >
             <ArrowLeft className="w-4 h-4" />
@@ -43,7 +41,7 @@ export default function SignInPage() {
           <h1 className="text-3xl font-bold text-slate-900 mb-2">Welcome back</h1>
           <p className="text-slate-600 mb-8">
             {"Don't have an account? "}
-            <Link href="/signup" className="text-violet-600 hover:text-violet-700 font-medium">
+            <Link to="/signup" className="text-violet-600 hover:text-violet-700 font-medium">
               Sign up for free
             </Link>
           </p>
@@ -67,7 +65,7 @@ export default function SignInPage() {
             <div className="space-y-2">
               <div className="flex items-center justify-between">
                 <label className="text-sm font-medium text-slate-700">Password</label>
-                <Link href="#" className="text-sm text-violet-600 hover:text-violet-700">
+                <Link to="/forgot-password" className="text-sm text-violet-600 hover:text-violet-700">
                   Forgot password?
                 </Link>
               </div>

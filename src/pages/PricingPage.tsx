@@ -1,8 +1,6 @@
-"use client"
-
 import { useState } from "react"
+import { Link } from "react-router-dom"
 import { motion } from "framer-motion"
-import Link from "next/link"
 import { Navbar } from "@/components/navbar"
 import { Footer } from "@/components/footer"
 import { Button } from "@/components/ui/button"
@@ -233,7 +231,7 @@ export default function PricingPage() {
                   )}
                 </div>
 
-                <Link href="/signup">
+                <Link to="/signup">
                   <Button
                     className={`w-full h-11 font-medium mb-6 ${
                       plan.popular

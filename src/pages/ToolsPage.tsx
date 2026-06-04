@@ -1,7 +1,5 @@
-"use client"
-
 import { useState, useMemo } from "react"
-import Link from "next/link"
+import { Link } from "react-router-dom"
 import { motion } from "framer-motion"
 import { Navbar } from "@/components/navbar"
 import { Footer } from "@/components/footer"
@@ -122,7 +120,7 @@ export default function ToolsPage() {
                   transition={{ duration: 0.3, delay: index * 0.02 }}
                 >
                   <Link
-                    href={`/tools/${tool.slug}`}
+                    to={`/tools/${tool.slug}`}
                     className={`group block cursor-pointer rounded-2xl border border-slate-200 p-5 hover:border-slate-300 hover:shadow-lg transition-all ${colors.bg}`}
                   >
                     <motion.div whileHover={{ y: -4 }} transition={{ duration: 0.2 }}>

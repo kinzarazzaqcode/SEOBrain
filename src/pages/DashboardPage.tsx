@@ -1,13 +1,9 @@
-"use client"
-
 import { useEffect, useState } from "react"
-import Link from "next/link"
-import { useRouter } from "next/navigation"
+import { Link, useNavigate } from "react-router-dom"
 import { motion } from "framer-motion"
 import { useAuth } from "@/contexts/auth-context"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Badge } from "@/components/ui/badge"
 import {
   Sparkles,
   Home,
@@ -17,7 +13,6 @@ import {
   CreditCard,
   Search,
   Bell,
-  TrendingUp,
   Zap,
   Target,
   BookMarked,
@@ -25,7 +20,6 @@ import {
   Clock,
   FileText,
   Shield,
-  MessageSquare,
   Image,
   PenTool,
   Bot,
@@ -100,14 +94,14 @@ function AnimatedCounter({ value, suffix = "" }: { value: number; suffix?: strin
 
 export default function DashboardPage() {
   const { user, isLoading, signOut } = useAuth()
-  const router = useRouter()
+  const navigate = useNavigate()
   const [sidebarOpen, setSidebarOpen] = useState(false)
 
   useEffect(() => {
     if (!isLoading && !user) {
-      router.push("/signin")
+      navigate("/signin")
     }
-  }, [user, isLoading, router])
+  }, [user, isLoading, navigate])
 
   if (isLoading) {
     return (
@@ -159,7 +153,7 @@ export default function DashboardPage() {
       >
         {/* Logo */}
         <div className="p-5 border-b border-white/10">
-          <Link href="/" className="flex items-center gap-2">
+          <Link to="/" className="flex items-center gap-2">
             <div className="w-9 h-9 rounded-xl bg-white/20 backdrop-blur flex items-center justify-center">
               <Sparkles className="w-5 h-5 text-white" />
             </div>
@@ -172,7 +166,7 @@ export default function DashboardPage() {
           {sidebarItems.map((item) => (
             <Link
               key={item.label}
-              href={item.href}
+              to={item.href}
               onClick={() => setSidebarOpen(false)}
               className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all ${
                 item.active
@@ -286,7 +280,7 @@ export default function DashboardPage() {
                 <div className="bg-white rounded-2xl border border-slate-200 p-6">
                   <div className="flex items-center justify-between mb-6">
                     <h2 className="text-lg font-semibold text-slate-900">Quick Access</h2>
-                    <Link href="/tools" className="text-sm text-violet-600 hover:text-violet-700 font-medium flex items-center gap-1">
+                    <Link to="/tools" className="text-sm text-violet-600 hover:text-violet-700 font-medium flex items-center gap-1">
                       View all tools
                       <ArrowUpRight className="w-4 h-4" />
                     </Link>
@@ -300,7 +294,7 @@ export default function DashboardPage() {
                         transition={{ duration: 0.2, delay: index * 0.05 }}
                       >
                         <Link
-                          href={tool.href}
+                          to={tool.href}
                           className="block p-4 rounded-xl border border-slate-200 hover:border-violet-300 hover:shadow-md transition-all group"
                         >
                           <div className={`w-10 h-10 rounded-lg ${colorClasses[tool.color]} flex items-center justify-center mb-3`}>
@@ -362,7 +356,7 @@ export default function DashboardPage() {
                   <h3 className="text-lg font-semibold mb-1">Running low on credits?</h3>
                   <p className="text-white/80 text-sm">Upgrade to Scale plan for 10x more AI generations and unlimited keywords.</p>
                 </div>
-                <Link href="/pricing">
+                <Link to="/pricing">
                   <Button className="bg-white text-violet-600 hover:bg-white/90 shrink-0">
                     Upgrade Plan
                   </Button>

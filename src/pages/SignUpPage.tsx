@@ -1,7 +1,5 @@
-"use client"
-
 import { useState } from "react"
-import Link from "next/link"
+import { Link } from "react-router-dom"
 import { motion } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -101,7 +99,7 @@ export default function SignUpPage() {
         >
           {/* Back Link */}
           <Link 
-            href="/" 
+            to="/" 
             className="inline-flex items-center gap-2 text-sm text-slate-600 hover:text-slate-900 transition-colors mb-8"
           >
             <ArrowLeft className="w-4 h-4" />
@@ -120,7 +118,7 @@ export default function SignUpPage() {
           <h1 className="text-3xl font-bold text-slate-900 mb-2">Create your account</h1>
           <p className="text-slate-600 mb-8">
             Already have an account?{" "}
-            <Link href="/signin" className="text-violet-600 hover:text-violet-700 font-medium">
+            <Link to="/signin" className="text-violet-600 hover:text-violet-700 font-medium">
               Sign in
             </Link>
           </p>
@@ -186,9 +184,9 @@ export default function SignUpPage() {
 
             <p className="text-xs text-center text-slate-500">
               By signing up, you agree to our{" "}
-              <Link href="#" className="text-violet-600 hover:underline">Terms of Service</Link>
+              <Link to="/terms" className="text-violet-600 hover:underline">Terms of Service</Link>
               {" and "}
-              <Link href="#" className="text-violet-600 hover:underline">Privacy Policy</Link>
+              <Link to="/privacy" className="text-violet-600 hover:underline">Privacy Policy</Link>
             </p>
           </form>
 

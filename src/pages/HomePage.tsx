@@ -5,7 +5,7 @@ import { ToolsSection } from "@/components/tools-section"
 import { PricingSection } from "@/components/pricing-section"
 import { Footer } from "@/components/footer"
 
-export default function Page() {
+export default function HomePage() {
   return (
     <main className="min-h-screen bg-white">
       <Navbar />

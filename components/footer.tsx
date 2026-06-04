@@ -1,6 +1,4 @@
-"use client"
-
-import Link from "next/link"
+import { Link } from "react-router-dom"
 import { Sparkles } from "lucide-react"
 
 const footerLinks = {
@@ -30,7 +28,7 @@ export function Footer() {
         <div className="py-16 grid grid-cols-2 md:grid-cols-6 gap-8">
           {/* Brand */}
           <div className="col-span-2">
-            <Link href="/" className="flex items-center gap-2 mb-4">
+            <Link to="/" className="flex items-center gap-2 mb-4">
               <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-violet-600 to-blue-500 flex items-center justify-center">
                 <Sparkles className="w-5 h-5 text-white" />
               </div>
@@ -65,12 +63,21 @@ export function Footer() {
               <ul className="space-y-2">
                 {links.map((link) => (
                   <li key={link.label}>
-                    <Link 
-                      href={link.href} 
-                      className="text-sm hover:text-white transition-colors"
-                    >
-                      {link.label}
-                    </Link>
+                    {link.href.startsWith("/#") ? (
+                      <a 
+                        href={link.href}
+                        className="text-sm hover:text-white transition-colors"
+                      >
+                        {link.label}
+                      </a>
+                    ) : (
+                      <Link 
+                        to={link.href} 
+                        className="text-sm hover:text-white transition-colors"
+                      >
+                        {link.label}
+                      </Link>
+                    )}
                   </li>
                 ))}
               </ul>
@@ -84,10 +91,10 @@ export function Footer() {
             {new Date().getFullYear()} SeoBrain. All rights reserved.
           </p>
           <div className="flex items-center gap-6">
-            <Link href="/privacy" className="text-sm hover:text-white transition-colors">
+            <Link to="/privacy" className="text-sm hover:text-white transition-colors">
               Privacy Policy
             </Link>
-            <Link href="/terms" className="text-sm hover:text-white transition-colors">
+            <Link to="/terms" className="text-sm hover:text-white transition-colors">
               Terms of Service
             </Link>
           </div>

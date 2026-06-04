@@ -1,7 +1,5 @@
-"use client"
-
 import { useState, useEffect } from "react"
-import Link from "next/link"
+import { Link, useLocation } from "react-router-dom"
 import { motion, useScroll } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { Menu, X, Sparkles } from "lucide-react"
@@ -17,6 +15,7 @@ export function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const { scrollY } = useScroll()
   const [scrolled, setScrolled] = useState(false)
+  const location = useLocation()
 
   useEffect(() => {
     const unsubscribe = scrollY.on("change", (latest) => {
@@ -24,6 +23,17 @@ export function Navbar() {
     })
     return () => unsubscribe()
   }, [scrollY])
+
+  const handleNavClick = (href: string) => {
+    setMobileMenuOpen(false)
+    // Handle anchor links on homepage
+    if (href.startsWith("/#") && location.pathname === "/") {
+      const element = document.querySelector(href.replace("/", ""))
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth" })
+      }
+    }
+  }
 
   return (
     <motion.nav 
@@ -39,7 +49,7 @@ export function Navbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2">
+          <Link to="/" className="flex items-center gap-2">
             <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-violet-600 to-blue-500 flex items-center justify-center">
               <Sparkles className="w-5 h-5 text-white" />
             </div>
@@ -49,23 +59,39 @@ export function Navbar() {
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-8">
             {navLinks.map((link) => (
-              <Link 
-                key={link.label}
-                href={link.href} 
-                className="text-sm font-medium text-slate-600 hover:text-slate-900 transition-colors"
-              >
-                {link.label}
-              </Link>
+              link.href.startsWith("/#") ? (
+                <a 
+                  key={link.label}
+                  href={link.href}
+                  onClick={(e) => {
+                    if (location.pathname === "/") {
+                      e.preventDefault()
+                      handleNavClick(link.href)
+                    }
+                  }}
+                  className="text-sm font-medium text-slate-600 hover:text-slate-900 transition-colors"
+                >
+                  {link.label}
+                </a>
+              ) : (
+                <Link 
+                  key={link.label}
+                  to={link.href} 
+                  className="text-sm font-medium text-slate-600 hover:text-slate-900 transition-colors"
+                >
+                  {link.label}
+                </Link>
+              )
             ))}
           </div>
 
           {/* Desktop Buttons */}
           <div className="hidden md:flex items-center gap-3">
             <Button variant="ghost" className="text-slate-600" asChild>
-              <Link href="/signin">Sign In</Link>
+              <Link to="/signin">Sign In</Link>
             </Button>
             <Button className="bg-gradient-to-r from-violet-600 to-blue-500 hover:from-violet-700 hover:to-blue-600 text-white border-0" asChild>
-              <Link href="/signup">Get Started Free</Link>
+              <Link to="/signup">Get Started Free</Link>
             </Button>
           </div>
 
@@ -93,21 +119,32 @@ export function Navbar() {
         >
           <div className="px-4 py-4 space-y-3">
             {navLinks.map((link) => (
-              <Link 
-                key={link.label}
-                href={link.href} 
-                className="block text-sm font-medium text-slate-600 hover:text-slate-900"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                {link.label}
-              </Link>
+              link.href.startsWith("/#") ? (
+                <a 
+                  key={link.label}
+                  href={link.href}
+                  className="block text-sm font-medium text-slate-600 hover:text-slate-900"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  {link.label}
+                </a>
+              ) : (
+                <Link 
+                  key={link.label}
+                  to={link.href} 
+                  className="block text-sm font-medium text-slate-600 hover:text-slate-900"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  {link.label}
+                </Link>
+              )
             ))}
             <div className="pt-3 flex flex-col gap-2">
               <Button variant="outline" className="w-full" asChild>
-                <Link href="/signin">Sign In</Link>
+                <Link to="/signin">Sign In</Link>
               </Button>
               <Button className="w-full bg-gradient-to-r from-violet-600 to-blue-500 text-white border-0" asChild>
-                <Link href="/signup">Get Started Free</Link>
+                <Link to="/signup">Get Started Free</Link>
               </Button>
             </div>
           </div>

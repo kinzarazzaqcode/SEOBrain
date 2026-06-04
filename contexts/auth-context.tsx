@@ -1,7 +1,5 @@
-"use client"
-
 import { createContext, useContext, useState, useEffect, ReactNode } from "react"
-import { useRouter } from "next/navigation"
+import { useNavigate } from "react-router-dom"
 
 interface User {
   id: string
@@ -23,7 +21,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined)
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null)
   const [isLoading, setIsLoading] = useState(true)
-  const router = useRouter()
+  const navigate = useNavigate()
 
   useEffect(() => {
     // Check for stored user on mount
@@ -47,7 +45,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     
     setUser(mockUser)
     localStorage.setItem("seobrain_user", JSON.stringify(mockUser))
-    router.push("/dashboard")
+    navigate("/dashboard")
   }
 
   const signUp = async (name: string, email: string, password: string) => {
@@ -63,13 +61,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     
     setUser(mockUser)
     localStorage.setItem("seobrain_user", JSON.stringify(mockUser))
-    router.push("/dashboard")
+    navigate("/dashboard")
   }
 
   const signOut = () => {
     setUser(null)
     localStorage.removeItem("seobrain_user")
-    router.push("/")
+    navigate("/")
   }
 
   return (

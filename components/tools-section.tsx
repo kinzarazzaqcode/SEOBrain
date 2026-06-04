@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useRef } from "react"
-import Link from "next/link"
+import { Link } from "react-router-dom"
 import { motion, useInView } from "framer-motion"
 import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
@@ -628,7 +628,7 @@ export function ToolsSection() {
               variants={cardVariants}
             >
               <Link
-                href={`/tools/${tool.slug}`}
+                to={`/tools/${tool.slug}`}
                 className="group block p-5 rounded-xl bg-white border border-slate-200 hover:border-violet-300 hover:shadow-lg transition-all duration-200"
               >
                 <motion.div

@@ -1,8 +1,5 @@
-"use client"
-
 import { useState, useCallback } from "react"
-import { useParams, notFound } from "next/navigation"
-import Link from "next/link"
+import { useParams, Link, Navigate } from "react-router-dom"
 import { motion } from "framer-motion"
 import { Navbar } from "@/components/navbar"
 import { Footer } from "@/components/footer"
@@ -33,10 +30,9 @@ import {
   Loader2
 } from "lucide-react"
 
-export default function ToolPage() {
-  const params = useParams()
-  const slug = params.slug as string
-  const tool = getToolBySlug(slug)
+export default function ToolDetailPage() {
+  const { slug } = useParams<{ slug: string }>()
+  const tool = slug ? getToolBySlug(slug) : null
 
   const [input, setInput] = useState("")
   const [output, setOutput] = useState("")
@@ -46,39 +42,26 @@ export default function ToolPage() {
   const [previewUrl, setPreviewUrl] = useState<string | null>(null)
   const [settings, setSettings] = useState<Record<string, string | number | boolean>>({})
 
-  // Initialize settings with defaults
-  useState(() => {
-    if (tool?.settings) {
-      const defaults: Record<string, string | number | boolean> = {}
-      tool.settings.forEach(setting => {
-        if (setting.default !== undefined) {
-          defaults[setting.label] = setting.default
-        }
-      })
-      setSettings(defaults)
-    }
-  })
-
   if (!tool) {
-    notFound()
+    return <Navigate to="/tools" replace />
   }
 
-  const handleCopy = useCallback(async () => {
+  const handleCopy = async () => {
     await navigator.clipboard.writeText(output)
     setCopied(true)
     setTimeout(() => setCopied(false), 2000)
-  }, [output])
+  }
 
-  const handleFileUpload = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
     if (file) {
       setUploadedFile(file)
       const url = URL.createObjectURL(file)
       setPreviewUrl(url)
     }
-  }, [])
+  }
 
-  const handleDrop = useCallback((e: React.DragEvent) => {
+  const handleDrop = (e: React.DragEvent) => {
     e.preventDefault()
     const file = e.dataTransfer.files?.[0]
     if (file && file.type.startsWith("image/")) {
@@ -86,9 +69,9 @@ export default function ToolPage() {
       const url = URL.createObjectURL(file)
       setPreviewUrl(url)
     }
-  }, [])
+  }
 
-  const handleProcess = useCallback(async () => {
+  const handleProcess = async () => {
     setIsProcessing(true)
     // Simulate processing
     await new Promise(resolve => setTimeout(resolve, 2000))
@@ -100,7 +83,7 @@ export default function ToolPage() {
     }
     
     setIsProcessing(false)
-  }, [input, tool.name, tool.type])
+  }
 
   const updateSetting = (label: string, value: string | number | boolean) => {
     setSettings(prev => ({ ...prev, [label]: value }))
@@ -123,7 +106,7 @@ export default function ToolPage() {
             className="mb-8"
           >
             <Link 
-              href="/tools" 
+              to="/tools" 
               className="inline-flex items-center gap-2 text-sm text-slate-600 hover:text-violet-600 transition-colors mb-6"
             >
               <ArrowLeft className="w-4 h-4" />
@@ -391,7 +374,7 @@ export default function ToolPage() {
                     <p className="text-sm text-slate-600 mb-3">
                       Upgrade to Pro for unlimited usage and advanced features.
                     </p>
-                    <Link href="/pricing">
+                    <Link to="/pricing">
                       <Button size="sm" className="w-full bg-gradient-to-r from-violet-600 to-blue-500 text-white">
                         Upgrade to Pro
                       </Button>
